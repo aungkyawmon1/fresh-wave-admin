@@ -7,11 +7,11 @@
             <div class="card-body">
                 @if ($message = Session::get('success'))
                 <div class="alert alert-success">
-                    {{ $message }}
+                    {{ $message }}{{ Auth::user()->role_id }}
                 </div>
                 @else
                 <div class="alert alert-success">
-                    Hello, {{ Auth::user()->username }}, You are logged in!
+                    Hello, {{ Auth::user()->role_id }}, You are logged in!
                 </div>
                 @endif
             </div>

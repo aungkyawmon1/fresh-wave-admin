@@ -24,7 +24,9 @@ Route::group([
     Route::post('/logout', [MobileController::class, 'logout']);
     Route::post('/refresh', [MobileController::class, 'refresh']);
     Route::get('/aps', [MobileController::class, 'aps']);
-    Route::get('/user-profile', [MobileController::class, 'userProfile']);   
+    Route::get('/user-profile', [MobileController::class, 'userProfile']);
+    Route::post('/update-profile', [MobileController::class, 'updateProfile']);
+    Route::post('/check-phone', [MobileController::class, 'checkPhone']);
     
     Route::post('/orders', [MobileController::class, 'orderList']);
     Route::post('/change-status', [MobileController::class, 'changeOrderStatus']);
@@ -34,6 +36,8 @@ Route::group([
     Route::post('/customerLogin', [MobileController::class, 'customerLogin']);
     Route::post('/customerRegister', [MobileController::class, 'customerRegister']);
     Route::get('/customerOrderHistory', [MobileController::class, 'orderHistoroy']);
+    Route::get('/nearestAgent', [MobileController::class, 'getNearestAgent']);
+    Route::post('/placeOrder', [MobileController::class, 'placeOrder']);
 
     Route::post('/requestStock', [MobileController::class, 'requestStock']);
 });

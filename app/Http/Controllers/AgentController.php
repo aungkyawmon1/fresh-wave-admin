@@ -15,7 +15,7 @@ class AgentController extends Controller
         if (!Auth::check()) {
             return redirect("login")->withSuccess('You are not allowed to access');
         }
-        $agents = User::all();
+        $agents = User::where("role_id", 1)->get();
         return view('agent.view')->with("agents",$agents);
     }
 
@@ -45,7 +45,7 @@ class AgentController extends Controller
                 'error' => 'Phone number already exist.',
             ]);
         }
-        $request->password = Hash::make($request->password);
+        //$request->password = Hash::make($request->password);
         
         User::create([
             'username' => $request->username,

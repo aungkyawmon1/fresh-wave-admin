@@ -36,4 +36,5 @@
         @endif
     </tbody>
 </table>
+
 @endsection

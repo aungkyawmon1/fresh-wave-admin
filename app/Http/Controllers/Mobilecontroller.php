@@ -11,7 +11,7 @@ use App\Models\Post;
 use Validator;
 use Hash;
 
-class Mobilecontroller extends Controller
+class MobileController extends Controller
 {
 
     public function __construct()
@@ -31,6 +31,10 @@ class Mobilecontroller extends Controller
         if(!$token = auth('api')->attempt($credentials))
         {
             return response()->json(['error' => 'Unauthorized'], 401);
+        }
+        if(auth('api')->user()->status != 1) {
+            return $this->createNewToken($token);
+            //return response()->json(['error' => 'Unauthorized'], 401); 
         }
         return $this->createNewToken($token);
     }
@@ -88,6 +92,28 @@ class Mobilecontroller extends Controller
         ]);
     }
 
+    public function updateProfile(Request $request) {
+        $id = auth()->user()->id;
+        User::where("id", $id)->first()->update(array('username'=>$request->username, 'phone_no'=>$request->phone_no, 'address'=>$request->address, 'latitude'=>$request->latitude, 'longitude'=>$request->longitude));
+        return response()->json([
+            'status' => 'Success',
+            'code' => 200,
+            'message' => 'Successfully updated'
+        ]);
+    }
+
+    public function checkPhone(Request $request) {
+        $user = User::select('username')->where('phone_no', $request->phone_no)->first();
+        
+        if($user != null) {
+            return response()->json([
+                'status' => 'Success',
+                'code' => 400,
+                'message' => 'Phone number already exist.'
+            ], 400);
+        }
+    }
+
     //for agent api
     public function orderList(Request $request) {
         $id = auth()->user()->id;
@@ -105,7 +131,7 @@ class Mobilecontroller extends Controller
 
     public function changeOrderStatus(Request $request) {
         $agent_id = auth()->user()->id;
-        User::where("id", $request->id)->first()->update(array('status'=>$request->status));
+        Order::where("id", $request->id)->first()->update(array('status'=>$request->status));
         return response()->json([
             'status' => 'Success',
             'code' => 200,
@@ -119,8 +145,10 @@ class Mobilecontroller extends Controller
     }
     //end agent api
 
-    public function getPosts() {
-        $data = Post::where('status', 1)->paginate(10);
+    public function getPosts(Request $request) {
+        $req = " ";
+        $des = " ";
+        $data = Post::where('status', 1)->where('title', 'LIKE', "{$req}%")->orWhere('description', 'LIKE', "%{$des}%")->paginate(10);
         return response()->json([
             'data' => $data->items(),
             'pagination' => [
@@ -197,8 +225,29 @@ class Mobilecontroller extends Controller
         return $this->createNewToken($token);
     }
 
+    public function getNearestAgent() {
+        $customer_id = auth()->user()->id;
+        $customer = User::where("id", $customer_id)->get();
+        // response()->json([$customer]);
+        $latitude = $customer[0]->latitude;
+        $longitude = $customer[0]->longitude;
+        $nearestLocation = User::select('*')
+            ->orderByRaw('POWER(latitude - '.$latitude.', 2) + POWER(longitude - '.$longitude.', 2)')
+            ->first();
+        //dd($nearestLocation->latitude, $nearestLocation->longitude, $nearestLocation->id, $nearestLocation->username);
+        return response()->json([
+            'id' => $nearestLocation->id,
+            'username' => $nearestLocation->username,
+            'latitude' => $nearestLocation->latitude,
+            'longitude' => $nearestLocation->longitude,
+            'address'  => $nearestLocation->address
+        ]);
+        
+    }
+
     public function placeOrder(Request $request) {
         $user_id = auth()->user()->id;
+        //return response()->json([$user_id]);
         $request->validate([
             'agent_id' => 'required',
             'count' => 'required',
@@ -211,11 +260,11 @@ class Mobilecontroller extends Controller
         Order::create([
             'agent_id' => $request->agent_id,
             'user_id' => $user_id,
-            'count' => $user->count,
-            'price' => $user->price,
-            'floor_price' => $user->floor_price,
-            'net_price' => $user->net_price,
-            'total_price' => $user->total_price,
+            'count' => $request->count,
+            'price' => $request->price,
+            'floor_price' => $request->floor_price,
+            'net_price' => $request->net_price,
+            'total_price' => $request->total_price,
             'status' => 0
         ]);
             
@@ -228,7 +277,7 @@ class Mobilecontroller extends Controller
 
     public function orderHistoroy() {
         $user_id = auth()->user()->id;
-        $data = Order::where('user_id', $id)->paginate(10);
+        $data = Order::where('user_id', $user_id)->paginate(10);
         return response()->json([
             'data' => $data->items(),
             'pagination' => [

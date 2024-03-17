@@ -14,8 +14,8 @@ class PostController extends Controller
         if (!Auth::check()) {
             return redirect("login")->withSuccess('You are not allowed to access');
         }
-        $posts = Post::all();
-        return view('post.view')->with("posts",$posts);
+        $posts = Post::where("status", 1)->paginate(5);
+        return view('post.view')->with(compact('posts'));
     }
 
     public function add_form() {

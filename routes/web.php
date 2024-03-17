@@ -23,8 +23,8 @@ Route::get('/', function () {
 
 Route::controller(LoginController::class)->group(function() {
     Route::get('/login', 'show')->name('login');
-    Route::post('/login', 'login')->name('login');
-    Route::get('/register', 'register_show')->name('register');
+    Route::post('/login', 'login')->name('portal-login');
+    Route::get('/register', 'register_show')->name('portal-register');
     Route::post('/register', 'register')->name('register');
     Route::get('/dashboard', 'dashboard')->name('dashboard');
     Route::get('/logout', 'logout')->name('logout');
