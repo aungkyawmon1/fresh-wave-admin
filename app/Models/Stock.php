@@ -8,5 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class Stock extends Model
 {
     use HasFactory;
-    protected $fillable = ['count'];
+    protected $fillable = ['count', 'request_stock'];
 }

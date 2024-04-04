@@ -1,0 +1,3 @@
+@if($html)
+{!! $htmlContent !!}
+@endif

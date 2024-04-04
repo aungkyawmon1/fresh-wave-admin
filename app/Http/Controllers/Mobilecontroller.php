@@ -10,6 +10,7 @@ use App\Models\Order;
 use App\Models\Post;
 use Validator;
 use Hash;
+use DB;
 
 class MobileController extends Controller
 {
@@ -112,6 +113,11 @@ class MobileController extends Controller
                 'message' => 'Phone number already exist.'
             ], 400);
         }
+        return response()->json([
+            'status' => 'Success',
+            'code' => 200,
+            'message' => 'Phone number is available.'
+        ], 200);
     }
 
     //for agent api
@@ -290,5 +296,26 @@ class MobileController extends Controller
 
     }
     //customer api end
+    public function checkOrderExist() {
+        $user_id = auth()->user()->id;
+        $data = Order::where('user_id', $user_id)->whereNot('status', 3)->whereNot('status', 5)->get()->first();
+        return response()->json($data);
+    }
+
+    public function orderReport () {
+        $user_id = auth()->user()->id;
+        /*$results = DB::table('orders')
+            ->select('created_at', DB::raw('MONTH(created_at) as month'), DB::raw('COUNT(*) as count'))
+            ->where('agent_id', $user_id)
+            ->where('status', 5)
+            ->groupBy('created_at', DB::raw('MONTH(created_at)'))
+            ->get();*/
+        $results = DB::table('orders')
+            ->selectRaw('DATE_FORMAT(created_at, "%Y-%m") as created_at, MONTH(created_at) as month, COUNT(*) as count')
+            ->where('status', 5)
+            ->groupBy('created_at', DB::raw('MONTH(created_at)'))
+            ->get();
+            return response()->json($results);
+    }
 
 }

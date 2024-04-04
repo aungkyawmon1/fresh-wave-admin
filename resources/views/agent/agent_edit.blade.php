@@ -3,7 +3,7 @@
 <div class="container h-100 mt-5">
   <div class="row h-100 justify-content-center align-items-center">
     <div class="col-10 col-md-8 col-lg-6">
-      <h3>Edit Agent</h3>
+      <h3>Update Agent</h3>
       <form action="{{ route('agent-edit-submit') }}" method="post">
         @csrf
         <input type="hidden" id="id" name="id" value="{{$agent->id}}">
@@ -26,11 +26,11 @@
           <label for="title">Longitude</label>
           <input type="text" class="form-control" id="longitude" name="longitude" value="{{ $agent->longitude }}" required>
         </div>
-        <select class="form-control" name="role_id">
+        <!--<select class="form-control" name="role_id">
           @foreach($roles as $item)
             <option value="{{$item->id}}">{{$item->name}}</option>
           @endforeach
-        </select>
+        </select>-->
         <div class="form-group">
           <label for="body">Address</label>
           <textarea class="form-control" id="address" name="address" rows="3" value="{{ $agent->address }}" required>{{ $agent->address }}</textarea>

@@ -34,11 +34,11 @@
           <textarea class="form-control" id="address" name="address" rows="3" required></textarea>
         </div>
         <div class="form-group">
-        <select class="form-control" name="role_id">
+        <!--<select class="form-control" name="role_id">
           @foreach($roles as $item)
             <option value="{{$item->id}}">{{$item->name}}</option>
           @endforeach
-        </select>
+        </select>!-->
         </div>
         <br>
         <button type="submit" class="btn btn-primary">Create</button>

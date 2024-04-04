@@ -5,6 +5,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\AgentController;
 use App\Http\Controllers\StockController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\DashboardController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,8 +27,11 @@ Route::controller(LoginController::class)->group(function() {
     Route::post('/login', 'login')->name('portal-login');
     Route::get('/register', 'register_show')->name('portal-register');
     Route::post('/register', 'register')->name('register');
-    Route::get('/dashboard', 'dashboard')->name('dashboard');
     Route::get('/logout', 'logout')->name('logout');
+});
+
+Route::controller(DashboardController::class)->group(function() {
+    Route::get('/dashboard', 'dashboard')->name('dashboard');
 });
 
 Route::controller(AgentController::class)->group(function() {
@@ -35,6 +39,7 @@ Route::controller(AgentController::class)->group(function() {
     Route::get('/agent-form', 'add_form')->name('add-form');
     Route::post('/agent-add', 'add')->name('agent-add');
     Route::get('/agents/{agent}/edit', 'edit_form')->name('agent-edit');
+    Route::get('/agents/{agent}/delete', 'delete')->name('agent-delete');
 // updates a post
 Route::post('/agent-edit-submit', 'edit')->name('agent-edit-submit');
 });
@@ -51,6 +56,7 @@ Route::controller(PostController::class)->group(function() {
     Route::get('/post-form', 'add_form')->name('post-form');
     Route::post('/post-add', 'add')->name('post-add');
     Route::get('/posts/{post}/edit', 'edit_form')->name('post-edit');
+    Route::get('/post/{post}/delete', 'delete')->name('post-delete');
 // updates a post
 Route::post('/post-edit-submit', 'edit')->name('post-edit-submit');
 });

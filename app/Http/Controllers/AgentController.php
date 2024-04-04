@@ -8,6 +8,7 @@ use Hash;
 use Session;
 use App\Models\Role;
 use Illuminate\Support\Facades\Auth;
+use DB;
 
 class AgentController extends Controller
 {
@@ -54,7 +55,7 @@ class AgentController extends Controller
             'address' => $request->address,
             'latitude' => $request->latitude,
             'longitude' => $request->longitude,
-            'role_id' => $request->role_id,
+            'role_id' => 1,
             'status' => 1
         ]);
         return redirect()->route('agents')->with('success','Agent has been created successfully.');
@@ -74,7 +75,7 @@ class AgentController extends Controller
         if (!Auth::check()) {
             return redirect("login")->withSuccess('You are not allowed to access');
         }
-        $user = User::select('username')->where('phone_no', $request->phone_no)->first();
+        $user = User::select('username')->whereNot('id', $request->id)->where('phone_no', $request->phone_no)->first();
         
         if($user != null) {
             return back()->withErrors([
@@ -86,7 +87,8 @@ class AgentController extends Controller
     }
 
 
-    public function delete(Request $request) {
-        
+    public function delete($id) {
+        DB::table('agents')->where('id', '=', $id)->delete();
+        return redirect()->route('agents')->with('success', 'Agent deleted successfully');
     }
 }

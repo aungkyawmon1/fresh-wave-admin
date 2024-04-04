@@ -7,6 +7,10 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+<link rel="stylesheet" type="text/css" href="https://pixinvent.com/stack-responsive-bootstrap-4-admin-template/app-assets/css/bootstrap-extended.min.css">
+<link rel="stylesheet" type="text/css" href="https://pixinvent.com/stack-responsive-bootstrap-4-admin-template/app-assets/fonts/simple-line-icons/style.min.css">
+<link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
 </head>
 <style>
     
@@ -25,13 +29,16 @@
     </div>
     <ul class="nav navbar-nav">
     <li class="nav-item">
+                        <a class="nav-link" href="{{route('dashboard')}}">Dashboard</a>
+                    </li>
+    <li class="nav-item">
                         <a class="nav-link" href="{{route('agents')}}">Agent</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{route('stocks')}}">Stock</a>
                     </li>
                     <li>
-                    <a class="nav-link" href="{{route('posts')}}">Post</a>
+                    <a class="nav-link" href="{{route('posts')}}">Article</a>
                     </li>
     </ul>
     <ul class="nav navbar-nav navbar-right">

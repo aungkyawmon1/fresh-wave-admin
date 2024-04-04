@@ -11,9 +11,10 @@
           <label for="title">Agent Name</label>
           <input type="text" class="form-control" id="username" name="username" value="{{ $stock->username }}" required>
         </div>
+        <input type="hidden" id="count" name="count" value = "{{$stock->count}}">
         <div class="form-group">
-          <label for="title">Count</label>
-          <input type="text" class="form-control" id="count" name="count" value="{{ $stock->count }}" required>
+          <label for="title">Request Count</label>
+          <input type="text" class="form-control" id="request_stock" name="request_stock" value="{{ $stock->request_stock }}" required>
         </div>
         <br>
         <button type="submit" class="btn btn-primary">Update</button>

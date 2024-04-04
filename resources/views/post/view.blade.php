@@ -25,7 +25,7 @@
                     <th>{{ $cont->description }}</th>
                     <th>{{ $cont->created_at }}</th>
                     <th><a href="/posts/{{ $cont->id }}/edit" class="btn btn-primary">Edit</a>
-                        <a href="/delete/{{ $cont->id }}" class="btn btn-danger">Delete</a>
+                        <a href="/delete/{{ $cont->id }}/delete" class="btn btn-danger">Delete</a>
                     </th>
                 </tr>
             @endforeach

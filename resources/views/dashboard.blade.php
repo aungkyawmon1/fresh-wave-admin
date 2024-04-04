@@ -1,21 +1,32 @@
 @extends('layout')
 @section('content')
-<div class="row justify-content-center">
-    <div class="col-md-8">
-        <div class="card">
-            <div class="card-header"><strong>Dashboard</strong></div>
-            <div class="card-body">
-                @if ($message = Session::get('success'))
-                <div class="alert alert-success">
-                    {{ $message }}{{ Auth::user()->role_id }}
+<div class="container">
+    <div class="row ">
+    @if (count($data) > 0)
+            @foreach ($data as $cont)
+            <div class="col-xl-3 col-lg-3">
+            <div class="card l-bg-cherry">
+                <div class="card-statistic-3 p-4">
+                    <div class="mb-4">
+                        <h3 class="card-title mb-0">{{$cont->created_at}}</h3>
+                    </div>
+                    <div class="row align-items-center mb-2 d-flex" style="margin-left:30px">
+                        <div class="col-8">
+                            <h2 class="d-flex align-items-center mb-0">
+                                {{$cont->count}}
+                            </h2>
+                        </div>
+                    </div>
+                    
                 </div>
-                @else
-                <div class="alert alert-success">
-                    Hello, {{ Auth::user()->role_id }}, You are logged in!
-                </div>
-                @endif
             </div>
         </div>
+            @endforeach
+        @else  
+        <tr>
+                <th>No Data</th>
+            </tr>
+    @endif
     </div>
 </div>
 @endsection

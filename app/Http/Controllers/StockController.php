@@ -39,7 +39,10 @@ class StockController extends Controller
         if (!Auth::check()) {
             return redirect("login")->withSuccess('You are not allowed to access');
         }
-        Stock::where("id", $request->id)->first()->update(array('count'=>$request->count));
+        $update_count = $request->count + $request->request_stock;
+        //dd($update_count);
+        $request->request_stock = 0;
+        Stock::where("id", $request->id)->first()->update(array('count'=>$update_count, 'request_stock'=>0));
         return redirect()->route('stocks')->with('success', 'Stock updated successfully');
     }
 }

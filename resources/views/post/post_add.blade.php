@@ -3,7 +3,7 @@
 <div class="container h-100 mt-5">
   <div class="row h-100 justify-content-center align-items-center">
     <div class="col-10 col-md-8 col-lg-6">
-      <h3>Add Post</h3>
+      <h3>Add Article</h3>
       <form action="{{ route('post-add') }}" method="post" enctype="multipart/form-data">
         @csrf
         <label class="block mb-4">

@@ -40,4 +40,6 @@ Route::group([
     Route::post('/placeOrder', [MobileController::class, 'placeOrder']);
 
     Route::post('/requestStock', [MobileController::class, 'requestStock']);
+    Route::get('/order-status', [MobileController::class, 'checkOrderExist']);
+    Route::get('/order-report', [MobileController::class, 'orderReport']);
 });

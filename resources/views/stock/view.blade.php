@@ -23,7 +23,6 @@
                     <th>{{ $cont->count }}</th>
                     <th>{{ $cont->request_stock}}
                     <th><a href="/stocks/{{ $cont->id }}/edit" class="btn btn-primary">Edit</a>
-                        <a href="/stocks/{{ $cont->id }}" class="btn btn-danger">Delete</a>
                     </th>
                 </tr>
             @endforeach
